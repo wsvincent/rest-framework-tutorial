@@ -4,11 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
-djangorestframework = "*"
-pygments = "*"
-coreapi = "*"
-coreapi-cli = "*"
-pyyaml = "*"
+django = "==2.2.5"
+djangorestframework = "==3.10.3"
+pygments = "==2.4.2"
 
 [dev-packages]
