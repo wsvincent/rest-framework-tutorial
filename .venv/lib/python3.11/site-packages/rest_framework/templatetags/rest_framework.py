@@ -1,5 +1,4 @@
 import re
-from collections import OrderedDict
 
 from django import template
 from django.template import loader
@@ -49,10 +48,10 @@ def with_location(fields, location):
 @register.simple_tag
 def form_for_link(link):
     import coreschema
-    properties = OrderedDict([
-        (field.name, field.schema or coreschema.String())
+    properties = {
+        field.name: field.schema or coreschema.String()
         for field in link.fields
-    ])
+    }
     required = [
         field.name
         for field in link.fields
@@ -120,7 +119,7 @@ def optional_docs_login(request):
 
 
 @register.simple_tag
-def optional_logout(request, user):
+def optional_logout(request, user, csrf_token):
     """
     Include a logout snippet if REST framework's logout view is in the URLconf.
     """
@@ -136,11 +135,16 @@ def optional_logout(request, user):
             <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-            <li><a href='{href}?next={next}'>Log out</a></li>
+            <form id="logoutForm" method="post" action="{href}?next={next}">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
+            </form>
+            <li>
+                <a href="#" onclick='document.getElementById("logoutForm").submit()'>Log out</a>
+            </li>
         </ul>
     </li>"""
-    snippet = format_html(snippet, user=escape(user), href=logout_url, next=escape(request.path))
-
+    snippet = format_html(snippet, user=escape(user), href=logout_url,
+                          next=escape(request.path), csrf_token=csrf_token)
     return mark_safe(snippet)
 
 
@@ -272,7 +276,7 @@ def schema_links(section, sec_key=None):
             links.update(new_links)
 
     if sec_key is not None:
-        new_links = OrderedDict()
+        new_links = {}
         for link_key, link in links.items():
             new_key = NESTED_FORMAT % (sec_key, link_key)
             new_links.update({new_key: link})
@@ -318,5 +322,5 @@ def break_long_headers(header):
     when possible (are comma separated)
     """
     if len(header) > 160 and ',' in header:
-        header = mark_safe('<br> ' + ', <br>'.join(header.split(',')))
+        header = mark_safe('<br> ' + ', <br>'.join(escape(header).split(',')))
     return header

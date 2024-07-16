@@ -26,13 +26,11 @@
     }
 
     function addPopupIndex(name) {
-        name = name + "__" + (popupIndex + 1);
-        return name;
+        return name + "__" + (popupIndex + 1);
     }
 
     function removePopupIndex(name) {
-        name = name.replace(new RegExp("__" + (popupIndex + 1) + "$"), '');
-        return name;
+        return name.replace(new RegExp("__" + (popupIndex + 1) + "$"), '');
     }
 
     function showAdminPopup(triggeringLink, name_regexp, add_popup) {
@@ -81,9 +79,11 @@
             siblings.each(function() {
                 const elm = $(this);
                 elm.attr('href', elm.attr('data-href-template').replace('__fk__', value));
+                elm.removeAttr('aria-disabled');
             });
         } else {
             siblings.removeAttr('href');
+            siblings.attr('aria-disabled', true);
         }
     }
 

@@ -79,9 +79,9 @@ def exception_handler(exc, context):
     to be raised.
     """
     if isinstance(exc, Http404):
-        exc = exceptions.NotFound()
+        exc = exceptions.NotFound(*(exc.args))
     elif isinstance(exc, PermissionDenied):
-        exc = exceptions.PermissionDenied()
+        exc = exceptions.PermissionDenied(*(exc.args))
 
     if isinstance(exc, exceptions.APIException):
         headers = {}
@@ -421,7 +421,7 @@ class APIView(View):
         """
         # Make the error obvious if a proper response is not returned
         assert isinstance(response, HttpResponseBase), (
-            'Expected a `Response`, `HttpResponse` or `HttpStreamingResponse` '
+            'Expected a `Response`, `HttpResponse` or `StreamingHttpResponse` '
             'to be returned from the view, but received a `%s`'
             % type(response)
         )

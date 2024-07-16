@@ -6,8 +6,10 @@
 # Goto Hayato <habita.gh@gmail.com>, 2019
 # Hiroki Sawano, 2022
 # Jannis Leidel <jannis@leidel.info>, 2011
+# Masaya, 2023
 # Shinichi Katsumata <shinichi.katsumata@gmail.com>, 2019
-# Shinya Okano <tokibito@gmail.com>, 2012-2018,2021
+# Shinya Okano <tokibito@gmail.com>, 2012-2018,2021,2023
+# Taichi Taniguchi, 2022
 # Takuro Onoue <kusanaginoturugi@gmail.com>, 2020
 # Takuya N <takninnovationresearch@gmail.com>, 2020
 # Tetsuya Morimoto <tetsuya.morimoto@gmail.com>, 2011
@@ -16,10 +18,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-17 05:10-0500\n"
-"PO-Revision-Date: 2022-05-25 07:05+0000\n"
-"Last-Translator: Hiroki Sawano, 2022\n"
-"Language-Team: Japanese (http://www.transifex.com/django/django/language/"
+"POT-Creation-Date: 2023-09-18 11:41-0300\n"
+"PO-Revision-Date: 2023-12-04 07:05+0000\n"
+"Last-Translator: Shinya Okano <tokibito@gmail.com>, 2012-2018,2021,2023\n"
+"Language-Team: Japanese (http://app.transifex.com/django/django/language/"
 "ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -188,6 +190,9 @@ msgstr ""
 "複数選択するときには Control キーを押したまま選択してください。Mac は "
 "Command キーを使ってください"
 
+msgid "Select this object for an action - {}"
+msgstr "アクション用にこのオブジェクトを選択 - {}"
+
 #, python-brace-format
 msgid "The {name} “{obj}” was added successfully."
 msgstr "{name} “{obj}” を追加しました。"
@@ -342,6 +347,9 @@ msgstr "%(total_count)s個ある%(module_name)s を全て選択"
 msgid "Clear selection"
 msgstr "選択を解除"
 
+msgid "Breadcrumbs"
+msgstr "パンくずリスト"
+
 #, python-format
 msgid "Models in the %(name)s application"
 msgstr "%(name)s アプリケーション内のモデル"
@@ -369,15 +377,16 @@ msgid "Change password"
 msgstr "パスワードの変更"
 
 msgid "Please correct the error below."
-msgstr "下記のエラーを修正してください。"
-
-msgid "Please correct the errors below."
-msgstr "下記のエラーを修正してください。"
+msgid_plural "Please correct the errors below."
+msgstr[0] "下記のエラーを修正してください。"
 
 #, python-format
 msgid "Enter a new password for the user <strong>%(username)s</strong>."
 msgstr ""
 "<strong>%(username)s</strong>さんの新しいパスワードを入力してください。"
+
+msgid "Skip to main content"
+msgstr "スキップしてメインコンテンツへ"
 
 msgid "Welcome,"
 msgstr "ようこそ"
@@ -404,6 +413,12 @@ msgstr "サイト上で表示"
 msgid "Filter"
 msgstr "フィルター"
 
+msgid "Hide counts"
+msgstr "件数を非表示"
+
+msgid "Show counts"
+msgstr "件数を表示"
+
 msgid "Clear all filters"
 msgstr "全てのフィルターを解除"
 
@@ -416,6 +431,15 @@ msgstr "ソート優先順位: %(priority_number)s"
 
 msgid "Toggle sorting"
 msgstr "昇順降順を切り替えます"
+
+msgid "Toggle theme (current theme: auto)"
+msgstr "テーマを切り替え (現在のテーマ: 自動)"
+
+msgid "Toggle theme (current theme: light)"
+msgstr "テーマを切り替え (現在のテーマ: ライト)"
+
+msgid "Toggle theme (current theme: dark)"
+msgstr "テーマを切り替え (現在のテーマ: ダーク)"
 
 msgid "Delete"
 msgstr "削除"
@@ -502,6 +526,15 @@ msgstr "自分の操作"
 msgid "None available"
 msgstr "利用不可"
 
+msgid "Added:"
+msgstr "追加されました:"
+
+msgid "Changed:"
+msgstr "変更されました:"
+
+msgid "Deleted:"
+msgstr "削除されました:"
+
 msgid "Unknown content"
 msgstr "不明なコンテント"
 
@@ -527,6 +560,9 @@ msgstr "パスワードまたはユーザー名を忘れましたか？"
 msgid "Toggle navigation"
 msgstr "ナビゲーションを切り替えます"
 
+msgid "Sidebar"
+msgstr "サイドバー"
+
 msgid "Start typing to filter…"
 msgstr "絞り込みの入力..."
 
@@ -543,10 +579,8 @@ msgid "Action"
 msgstr "操作"
 
 msgid "entry"
-msgstr "エントリ"
-
-msgid "entries"
-msgstr "エントリ"
+msgid_plural "entries"
+msgstr[0] "エントリー"
 
 msgid ""
 "This object doesn’t have a change history. It probably wasn’t added via this "
@@ -605,7 +639,7 @@ msgstr "選択された %(model)s を削除"
 
 #, python-format
 msgid "View selected %(model)s"
-msgstr ""
+msgstr "選択された %(model)s を表示"
 
 msgid "Thanks for spending some quality time with the web site today."
 msgstr "ご利用ありがとうございました。"
@@ -703,6 +737,9 @@ msgstr "メールアドレス:"
 
 msgid "Reset my password"
 msgstr "パスワードをリセット"
+
+msgid "Select all objects on this page for an action"
+msgstr "アクション用にこのページのすべてのオブジェクトを選択"
 
 msgid "All dates"
 msgstr "いつでも"

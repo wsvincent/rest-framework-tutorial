@@ -1,10 +1,23 @@
 import sys
-from typing import Awaitable, Callable, Dict, Iterable, Optional, Tuple, Type, Union
+from typing import (
+    Any,
+    Awaitable,
+    Callable,
+    Dict,
+    Iterable,
+    Literal,
+    Optional,
+    Protocol,
+    Tuple,
+    Type,
+    TypedDict,
+    Union,
+)
 
-if sys.version_info >= (3, 8):
-    from typing import Literal, Protocol, TypedDict
+if sys.version_info >= (3, 11):
+    from typing import NotRequired
 else:
-    from typing_extensions import Literal, Protocol, TypedDict
+    from typing_extensions import NotRequired
 
 __all__ = (
     "ASGIVersions",
@@ -17,6 +30,7 @@ __all__ = (
     "HTTPResponseStartEvent",
     "HTTPResponseBodyEvent",
     "HTTPResponseTrailersEvent",
+    "HTTPResponsePathsendEvent",
     "HTTPServerPushEvent",
     "HTTPDisconnectEvent",
     "WebSocketConnectEvent",
@@ -62,6 +76,7 @@ class HTTPScope(TypedDict):
     headers: Iterable[Tuple[bytes, bytes]]
     client: Optional[Tuple[str, int]]
     server: Optional[Tuple[str, Optional[int]]]
+    state: NotRequired[Dict[str, Any]]
     extensions: Optional[Dict[str, Dict[object, object]]]
 
 
@@ -78,12 +93,14 @@ class WebSocketScope(TypedDict):
     client: Optional[Tuple[str, int]]
     server: Optional[Tuple[str, Optional[int]]]
     subprotocols: Iterable[str]
+    state: NotRequired[Dict[str, Any]]
     extensions: Optional[Dict[str, Dict[object, object]]]
 
 
 class LifespanScope(TypedDict):
     type: Literal["lifespan"]
     asgi: ASGIVersions
+    state: NotRequired[Dict[str, Any]]
 
 
 WWWScope = Union[HTTPScope, WebSocketScope]
@@ -94,6 +111,11 @@ class HTTPRequestEvent(TypedDict):
     type: Literal["http.request"]
     body: bytes
     more_body: bool
+
+
+class HTTPResponseDebugEvent(TypedDict):
+    type: Literal["http.response.debug"]
+    info: Dict[str, object]
 
 
 class HTTPResponseStartEvent(TypedDict):
@@ -113,6 +135,11 @@ class HTTPResponseTrailersEvent(TypedDict):
     type: Literal["http.response.trailers"]
     headers: Iterable[Tuple[bytes, bytes]]
     more_trailers: bool
+
+
+class HTTPResponsePathsendEvent(TypedDict):
+    type: Literal["http.response.pathsend"]
+    path: str
 
 
 class HTTPServerPushEvent(TypedDict):

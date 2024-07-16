@@ -3,7 +3,6 @@ The `compat` module provides support for backwards compatibility with older
 versions of Django/Python, and compatibility wrappers around optional packages.
 """
 import django
-from django.conf import settings
 from django.views.generic import View
 
 
@@ -12,13 +11,6 @@ def unicode_http_header(value):
     if isinstance(value, bytes):
         return value.decode('iso-8859-1')
     return value
-
-
-def distinct(queryset, base):
-    if settings.DATABASES[queryset.db]["ENGINE"] == "django.db.backends.oracle":
-        # distinct analogue for Oracle users
-        return base.filter(pk__in=set(queryset.values_list('pk', flat=True)))
-    return queryset.distinct()
 
 
 # django.contrib.postgres requires psycopg2
@@ -53,6 +45,12 @@ try:
     import yaml
 except ImportError:
     yaml = None
+
+# inflection is optional
+try:
+    import inflection
+except ImportError:
+    inflection = None
 
 
 # requests is optional
@@ -153,28 +151,19 @@ else:
         return False
 
 
-if django.VERSION >= (4, 2):
-    # Django 4.2+: use the stock parse_header_parameters function
-    # Note: Django 4.1 also has an implementation of parse_header_parameters
-    #       which is slightly different from the one in 4.2, it needs
-    #       the compatibility shim as well.
-    from django.utils.http import parse_header_parameters
+if django.VERSION >= (5, 1):
+    # Django 5.1+: use the stock ip_address_validators function
+    # Note: Before Django 5.1, ip_address_validators returns a tuple containing
+    #       1) the list of validators and 2) the error message. Starting from
+    #       Django 5.1 ip_address_validators only returns the list of validators
+    from django.core.validators import ip_address_validators
 else:
-    # Django <= 4.1: create a compatibility shim for parse_header_parameters
-    from django.http.multipartparser import parse_header
+    # Django <= 5.1: create a compatibility shim for ip_address_validators
+    from django.core.validators import \
+        ip_address_validators as _ip_address_validators
 
-    def parse_header_parameters(line):
-        # parse_header works with bytes, but parse_header_parameters
-        # works with strings. Call encode to convert the line to bytes.
-        main_value_pair, params = parse_header(line.encode())
-        return main_value_pair, {
-            # parse_header will convert *some* values to string.
-            # parse_header_parameters converts *all* values to string.
-            # Make sure all values are converted by calling decode on
-            # any remaining non-string values.
-            k: v if isinstance(v, str) else v.decode()
-            for k, v in params.items()
-        }
+    def ip_address_validators(protocol, unpack_ipv4):
+        return _ip_address_validators(protocol, unpack_ipv4)[0]
 
 
 # `separators` argument to `json.dumps()` differs between 2.x and 3.x
