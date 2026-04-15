@@ -1,5 +1,5 @@
-asgiref==3.8.1
-Django==5.2.1
-djangorestframework==3.16.0
-Pygments==2.19.1
-sqlparse==0.5.3
+asgiref==3.11.1
+Django==6.0.4
+djangorestframework==3.17.1
+Pygments==2.20.0
+sqlparse==0.5.5
